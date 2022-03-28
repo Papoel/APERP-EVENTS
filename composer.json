@@ -77,6 +77,14 @@
         "symfony/polyfill-php80": "*"
     },
     "scripts": {
+        "fixtures_load": [
+            "symfony console doctrine:database:drop --if-exists --force",
+            "symfony console doctrine:database:create",
+            "symfony console make:migration",
+            "symfony console doctrine:migrations:migrate -n",
+            "symfony console doctrine:fixtures:load -n"
+        ],
+
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
@@ -98,6 +106,7 @@
         }
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/debug-bundle": "6.0.*",
         "symfony/maker-bundle": "^1.0",
         "symfony/stopwatch": "6.0.*",
