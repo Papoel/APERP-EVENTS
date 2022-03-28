@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <div class="row">
+{#            <div class="col">#}
+                <h1 class="text-center my-5">Inscription</h1>
+                {{ form_start(registrationForm) }}
+
+                <fieldset class="my-3">
+                    <legend class="fw-bold">Mon Identité</legend>
+                    <div class="row">
+
+                        <div class="col-4">
+                            {{ form_row(registrationForm.lastname) }}
+{#                            <label for="" class="form-label">Nom</label>#}
+{#                            <input type="text" id="" name="" required="required" maxlength="180" class="form-control">#}
+                        </div>
+
+                        <div class="col-4">
+                            {{ form_row(registrationForm.firstname) }}
+{#                            <label for="" class="form-label">Prénom</label>#}
+{#                            <input type="text" id="" name="" required="required" maxlength="180" class="form-control">#}
+                        </div>
+
+                        <div class="col-4">
+                            {{ form_row(registrationForm.email) }}
+                        </div>
+
+                    </div>
+                </fieldset>
+
+                <fieldset class="my-3">
+                    <legend class="fw-bold">Mes Coordonnées</legend>
+                    <div class="row">
+                        <div class="col-4">
+                            {{ form_row(registrationForm.address) }}
+{#                            <label for="" class="form-label">Adresse</label>#}
+{#                            <input type="text" id="" name="" required="required" maxlength="180" class="form-control">#}
+                        </div>
+                        <div class="col-4">
+                            {{ form_row(registrationForm.zip) }}
+{#                            <label for="" class="form-label">Code Postal</label>#}
+{#                            <input type="text" id="" name="" required="required" maxlength="180" class="form-control">#}
+                        </div>
+                        <div class="col-4">
+                            {{ form_row(registrationForm.town) }}
+{#                            <label for="" class="form-label">Ville</label>#}
+{#                            <input type="text" id="" name="" required="required" maxlength="180" class="form-control">#}
+                        </div>
+                    </div>
+                </fieldset>
+
+                {{ form_row(registrationForm.plainPassword) }}
+{#            </div>#}
+        </div>
+        <button type="submit" class="btn btn-primary my-3">M'inscrire</button>
+        {{ form_end(registrationForm) }}
+    </section>
+{% endblock %}
