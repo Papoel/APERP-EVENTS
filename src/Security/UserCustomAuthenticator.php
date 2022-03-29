@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,6 +48,13 @@ class UserCustomAuthenticator extends AbstractLoginFormAuthenticator
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
+        }
+
+        $user = $token->getUser();
+
+        /** @var User $user */
+        if (in_array("ROLE_ADMIN", $user->getRoles(), true)) {
+            return new RedirectResponse($this->urlGenerator->generate('admin'));
         }
 
         // For example:
