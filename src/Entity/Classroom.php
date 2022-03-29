@@ -21,6 +21,9 @@ class Classroom
     #[ORM\ManyToMany(targetEntity: Teacher::class, mappedBy: 'classroom')]
     private $teachers;
 
+    #[ORM\OneToOne(mappedBy: 'class', targetEntity: Children::class, cascade: ['persist', 'remove'])]
+    private $children;
+
     public function __construct()
     {
         $this->teachers = new ArrayCollection();
@@ -66,6 +69,23 @@ class Classroom
         if ($this->teachers->removeElement($teacher)) {
             $teacher->removeClassroom($this);
         }
+
+        return $this;
+    }
+
+    public function getChildren(): ?Children
+    {
+        return $this->children;
+    }
+
+    public function setChildren(Children $children): self
+    {
+        // set the owning side of the relation if necessary
+        if ($children->getClass() !== $this) {
+            $children->setClass($this);
+        }
+
+        $this->children = $children;
 
         return $this;
     }
