@@ -27,6 +27,14 @@ class Children
     #[ORM\Column(type: 'boolean')]
     private $isExterne;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'children')]
+    private $parents;
+
+    public function __construct()
+    {
+        $this->parents = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +84,33 @@ class Children
     public function setIsExterne(bool $isExterne): self
     {
         $this->isExterne = $isExterne;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getParents(): Collection
+    {
+        return $this->parents;
+    }
+
+    public function addParent(User $parent): self
+    {
+        if (!$this->parents->contains($parent)) {
+            $this->parents[] = $parent;
+            $parent->addChild($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParent(User $parent): self
+    {
+        if ($this->parents->removeElement($parent)) {
+            $parent->removeChild($this);
+        }
 
         return $this;
     }

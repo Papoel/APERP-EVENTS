@@ -21,6 +21,8 @@ class ChildrenFixtures extends Fixture
             $children->setIsExterne(false);
 
             $manager->persist($children);
+
+            $this->addReference(sprintf('children%d', $i), $children);
         }
 
         $manager->flush();

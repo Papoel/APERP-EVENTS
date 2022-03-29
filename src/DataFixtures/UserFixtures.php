@@ -2,13 +2,14 @@
 
 namespace App\DataFixtures;
 
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Faker;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserFixtures extends Fixture
+class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(private UserPasswordHasherInterface $passwordHasher)
     {
@@ -46,10 +47,21 @@ class UserFixtures extends Fixture
             $user->setPassword($hash);
             $user->setIsAdmin(false);
 
+            $user->addChild(
+                $this->getReference(sprintf('children%d', $faker->numberBetween(1, 350)))
+            );
+
             $manager->persist($user);
 
             $this->addReference(sprintf('user%d', $i), $user);
         }
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            ChildrenFixtures::class,
+        ];
     }
 }
