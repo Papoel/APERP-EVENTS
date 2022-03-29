@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use Faker;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -15,6 +16,8 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $faker = Faker\Factory::create('fr_FR');
+
         $userAdmin = new User();
 
         $userAdmin->setFirstname('Pascal');
@@ -30,21 +33,23 @@ class UserFixtures extends Fixture
 
         $manager->persist($userAdmin);
 
-        $user = new User();
+        for ($i = 1; $i<= 20; $i++) {
+            $user = new User();
+            $user->setFirstname($faker->firstName());
+            $user->setLastname($faker->lastName());
+            $user->setAddress($faker->streetAddress() );
+            $user->setZip((string)$faker->randomNumber(5, true));
+            $user->setTown($faker->city());
+            $user-> setEmail(sprintf('user%d@email.fr', $i));
+            $user-> setRoles(["ROLE_USER"]);
+            $hash = $this->passwordHasher->hashPassword($user, ('password'));
+            $user->setPassword($hash);
+            $user->setIsAdmin(false);
 
-        $user->setFirstname('John');
-        $user->setLastname('Doe');
-        $user->setAddress('126 rue de Victor Hugo');
-        $user->setZip('07000');
-        $user->setTown('Cruas');
-        $user-> setEmail("user@email.fr");
-        $user-> setRoles(["ROLE_USER"]);
-        $hash = $this->passwordHasher->hashPassword($user, ('password456'));
-        $user->setPassword($hash);
-        $user->setIsAdmin(true);
+            $manager->persist($user);
 
-        $manager->persist($user);
-
+            $this->addReference(sprintf('user%d', $i), $user);
+        }
         $manager->flush();
     }
 }
