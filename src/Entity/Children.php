@@ -24,10 +24,6 @@ class Children
     #[ORM\Column(type: 'integer', nullable: true)]
     private $age;
 
-    #[ORM\OneToOne(inversedBy: 'children', targetEntity: Classroom::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private $class;
-
     #[ORM\Column(type: 'boolean')]
     private $isExterne;
 
@@ -36,6 +32,10 @@ class Children
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'childrens')]
     private $parents;
+
+    #[ORM\OneToOne(inversedBy: 'children_list', targetEntity: Classroom::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private $classroom;
 
     public function __construct()
     {
@@ -80,18 +80,6 @@ class Children
     public function setAge(?int $age): self
     {
         $this->age = $age;
-
-        return $this;
-    }
-
-    public function getClass(): ?Classroom
-    {
-        return $this->class;
-    }
-
-    public function setClass(Classroom $class): self
-    {
-        $this->class = $class;
 
         return $this;
     }
@@ -152,6 +140,18 @@ class Children
     public function removeParent(User $parent): self
     {
         $this->parents->removeElement($parent);
+
+        return $this;
+    }
+
+    public function getClassroom(): ?Classroom
+    {
+        return $this->classroom;
+    }
+
+    public function setClassroom(Classroom $classroom): self
+    {
+        $this->classroom = $classroom;
 
         return $this;
     }

@@ -21,17 +21,6 @@ class Teacher
     #[ORM\Column(type: 'string', length: 100)]
     private $lastname;
 
-    #[ORM\ManyToMany(targetEntity: Classroom::class, inversedBy: 'teachers')]
-    private $classroom;
-
-    #[ORM\ManyToMany(targetEntity: Children::class, mappedBy: 'teacher')]
-    private $childrens;
-
-    public function __construct()
-    {
-        $this->classroom = new ArrayCollection();
-        $this->childrens = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -58,57 +47,6 @@ class Teacher
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Classroom>
-     */
-    public function getClassroom(): Collection
-    {
-        return $this->classroom;
-    }
-
-    public function addClassroom(Classroom $classroom): self
-    {
-        if (!$this->classroom->contains($classroom)) {
-            $this->classroom[] = $classroom;
-        }
-
-        return $this;
-    }
-
-    public function removeClassroom(Classroom $classroom): self
-    {
-        $this->classroom->removeElement($classroom);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Children>
-     */
-    public function getChildrens(): Collection
-    {
-        return $this->childrens;
-    }
-
-    public function addChildren(Children $children): self
-    {
-        if (!$this->childrens->contains($children)) {
-            $this->childrens[] = $children;
-            $children->addTeacher($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChildren(Children $children): self
-    {
-        if ($this->childrens->removeElement($children)) {
-            $children->removeTeacher($this);
-        }
 
         return $this;
     }
