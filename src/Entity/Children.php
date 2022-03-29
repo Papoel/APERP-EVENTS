@@ -27,22 +27,6 @@ class Children
     #[ORM\Column(type: 'boolean')]
     private $isExterne;
 
-    #[ORM\ManyToMany(targetEntity: Teacher::class, inversedBy: 'childrens')]
-    private $teacher;
-
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'childrens')]
-    private $parents;
-
-    #[ORM\OneToOne(inversedBy: 'children_list', targetEntity: Classroom::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: true)]
-    private $classroom;
-
-    public function __construct()
-    {
-        $this->teacher = new ArrayCollection();
-        $this->parents = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -92,66 +76,6 @@ class Children
     public function setIsExterne(bool $isExterne): self
     {
         $this->isExterne = $isExterne;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Teacher>
-     */
-    public function getTeacher(): Collection
-    {
-        return $this->teacher;
-    }
-
-    public function addTeacher(Teacher $teacher): self
-    {
-        if (!$this->teacher->contains($teacher)) {
-            $this->teacher[] = $teacher;
-        }
-
-        return $this;
-    }
-
-    public function removeTeacher(Teacher $teacher): self
-    {
-        $this->teacher->removeElement($teacher);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getParents(): Collection
-    {
-        return $this->parents;
-    }
-
-    public function addParent(User $parent): self
-    {
-        if (!$this->parents->contains($parent)) {
-            $this->parents[] = $parent;
-        }
-
-        return $this;
-    }
-
-    public function removeParent(User $parent): self
-    {
-        $this->parents->removeElement($parent);
-
-        return $this;
-    }
-
-    public function getClassroom(): ?Classroom
-    {
-        return $this->classroom;
-    }
-
-    public function setClassroom(Classroom $classroom): self
-    {
-        $this->classroom = $classroom;
 
         return $this;
     }

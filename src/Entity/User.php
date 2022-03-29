@@ -46,19 +46,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
-    #[ORM\ManyToMany(targetEntity: Children::class, mappedBy: 'parents')]
-    private $childrens;
-
-    public function __construct()
-    {
-        $this->childrens = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
     }
-
 
     public function getFirstname(): ?string
     {
@@ -195,32 +186,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    /**
-     * @return Collection<int, Children>
-     */
-    public function getChildrens(): Collection
-    {
-        return $this->childrens;
-    }
-
-    public function addChildren(Children $children): self
-    {
-        if (!$this->childrens->contains($children)) {
-            $this->childrens[] = $children;
-            $children->addParent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChildren(Children $children): self
-    {
-        if ($this->childrens->removeElement($children)) {
-            $children->removeParent($this);
-        }
-
-        return $this;
     }
 }
