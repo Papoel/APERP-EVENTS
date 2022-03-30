@@ -2,30 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\Children;
+use App\Entity\Level;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Children|null find($id, $lockMode = null, $lockVersion = null)
- * @method Children|null findOneBy(array $criteria, array $orderBy = null)
- * @method Children[]    findAll()
- * @method Children[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Level|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Level|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Level[]    findAll()
+ * @method Level[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ChildrenRepository extends ServiceEntityRepository
+class LevelRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Children::class);
+        parent::__construct($registry, Level::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Children $entity, bool $flush = true): void
+    public function add(Level $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -37,7 +37,7 @@ class ChildrenRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Children $entity, bool $flush = true): void
+    public function remove(Level $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -46,7 +46,7 @@ class ChildrenRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Children[] Returns an array of Children objects
+    //  * @return Level[] Returns an array of Level objects
     //  */
     /*
     public function findByExampleField($value)
@@ -63,7 +63,7 @@ class ChildrenRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Children
+    public function findOneBySomeField($value): ?Level
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

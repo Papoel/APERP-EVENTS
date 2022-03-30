@@ -13,11 +13,7 @@ class TeacherFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        $classe = ['CP', 'CE1', 'CE2', 'CM1', 'CM2'];
-        $iMax = count($classe) -1;
-
-
-        for ($i = 0; $i <= $iMax; ++$i) {
+        for ($i = 1; $i <= 5; ++$i) {
             $teacher = new Teacher();
 
             $teacher->setFirstname($faker->firstName());
@@ -27,6 +23,7 @@ class TeacherFixtures extends Fixture
 
             $this->addReference(sprintf('teacher%d', $i), $teacher);
         }
+
         $manager->flush();
 
     }

@@ -2,14 +2,14 @@
 
 namespace App\Controller\Admin\Classrooms;
 
-use App\Entity\Classroom;
+use App\Entity\Level;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ClassroomCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Classroom::class;
+        return Level::class;
     }
 
     /*

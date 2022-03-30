@@ -21,6 +21,18 @@ class Teacher
     #[ORM\Column(type: 'string', length: 100)]
     private $lastname;
 
+    #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Students::class)]
+    private $students;
+
+    #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: Level::class)]
+    private $level;
+
+    public function __construct()
+    {
+        $this->students = new ArrayCollection();
+        $this->level = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -47,6 +59,66 @@ class Teacher
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Students>
+     */
+    public function getStudents(): Collection
+    {
+        return $this->students;
+    }
+
+    public function addStudent(Students $student): self
+    {
+        if (!$this->students->contains($student)) {
+            $this->students[] = $student;
+            $student->setTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudent(Students $student): self
+    {
+        if ($this->students->removeElement($student)) {
+            // set the owning side to null (unless already changed)
+            if ($student->getTeacher() === $this) {
+                $student->setTeacher(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Level>
+     */
+    public function getLevel(): Collection
+    {
+        return $this->level;
+    }
+
+    public function addLevel(Level $level): self
+    {
+        if (!$this->level->contains($level)) {
+            $this->level[] = $level;
+            $level->setTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLevel(Level $level): self
+    {
+        if ($this->level->removeElement($level)) {
+            // set the owning side to null (unless already changed)
+            if ($level->getTeacher() === $this) {
+                $level->setTeacher(null);
+            }
+        }
 
         return $this;
     }

@@ -2,30 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\Classroom;
+use App\Entity\Students;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Classroom|null find($id, $lockMode = null, $lockVersion = null)
- * @method Classroom|null findOneBy(array $criteria, array $orderBy = null)
- * @method Classroom[]    findAll()
- * @method Classroom[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Students|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Students|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Students[]    findAll()
+ * @method Students[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ClassroomRepository extends ServiceEntityRepository
+class StudentsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Classroom::class);
+        parent::__construct($registry, Students::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Classroom $entity, bool $flush = true): void
+    public function add(Students $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -37,7 +37,7 @@ class ClassroomRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Classroom $entity, bool $flush = true): void
+    public function remove(Students $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -46,7 +46,7 @@ class ClassroomRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Classroom[] Returns an array of Classroom objects
+    //  * @return Students[] Returns an array of Children objects
     //  */
     /*
     public function findByExampleField($value)
@@ -63,7 +63,7 @@ class ClassroomRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Classroom
+    public function findOneBySomeField($value): ?Children
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

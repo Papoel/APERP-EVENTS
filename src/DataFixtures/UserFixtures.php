@@ -48,7 +48,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setIsAdmin(false);
 
             $user->addChild(
-                $this->getReference(sprintf('children%d', $faker->numberBetween(1, 350)))
+                $this->getReference(sprintf('student%d', $faker->numberBetween(1, 50)))
             );
 
             $manager->persist($user);
@@ -61,7 +61,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            ChildrenFixtures::class,
+            StudentsFixtures::class,
         ];
     }
 }

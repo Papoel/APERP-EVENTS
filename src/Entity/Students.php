@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ChildrenRepository;
+use App\Repository\StudentsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ChildrenRepository::class)]
-class Children
+#[ORM\Entity(repositoryClass: StudentsRepository::class)]
+class Students
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,6 +29,13 @@ class Children
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'children')]
     private $parents;
+
+    #[ORM\ManyToOne(targetEntity: Teacher::class, inversedBy: 'students')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $teacher;
+
+    #[ORM\ManyToOne(targetEntity: Level::class, inversedBy: 'students')]
+    private $level;
 
     public function __construct()
     {
@@ -111,6 +118,30 @@ class Children
         if ($this->parents->removeElement($parent)) {
             $parent->removeChild($this);
         }
+
+        return $this;
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    public function getLevel(): ?Level
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?Level $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }
