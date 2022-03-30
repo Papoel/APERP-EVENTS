@@ -19,7 +19,7 @@ class EventsFixtures extends Fixture
 
             $event->setName($faker->sentence(5));
             $event->setLocation($faker->secondaryAddress());
-            $event->setPrice($faker->randomFloat(0, 49.50));
+            $event->setPrice($faker->randomFloat(1, 0.5, 15));
             $event->setCapacity($faker->numberBetween(10, 150));
             $event->setDescription($faker->realTextBetween($minNbChars = 80, $maxNbChars = 500, $indexSize = 2));
             $event->setImage($faker->imageUrl(640, 480, 'animals', true));
