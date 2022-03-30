@@ -16,6 +16,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
+/**
+ * @method createNotFoundException(string $string)
+ */
 class UserCustomAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
@@ -46,20 +49,25 @@ class UserCustomAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
+        {
+            $user = $token->getUser();
+
+            /** @var User $user */
+            if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
+                return new RedirectResponse($this->urlGenerator->generate('admin'));
+            }
+
+            /** @var User $user */
+            if (in_array('ROLE_USER', $user->getRoles(), true)) {
+                return new RedirectResponse($this->urlGenerator->generate('app_home'));
+            }
+
+            if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+                return new RedirectResponse($targetPath);
+            }
+
+            throw $this->createNotFoundException("Une erreur s'est produite ...");
         }
-
-        $user = $token->getUser();
-
-        /** @var User $user */
-        if (in_array("ROLE_ADMIN", $user->getRoles(), true)) {
-            return new RedirectResponse($this->urlGenerator->generate('admin'));
-        }
-
-        // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_home'));
-        // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl(Request $request): string
