@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220330163631 extends AbstractMigration
+final class Version20220401132128 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,6 +20,7 @@ final class Version20220330163631 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('CREATE TABLE events (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, location VARCHAR(255) NOT NULL, price DOUBLE PRECISION DEFAULT NULL, capacity INT DEFAULT NULL, description LONGTEXT DEFAULT NULL, starts_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', finish_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE level (id INT AUTO_INCREMENT NOT NULL, teacher_id INT DEFAULT NULL, name VARCHAR(3) NOT NULL, INDEX IDX_9AEACC1341807E1D (teacher_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE students (id INT AUTO_INCREMENT NOT NULL, teacher_id INT NOT NULL, level_id INT DEFAULT NULL, firstname VARCHAR(100) NOT NULL, lastname VARCHAR(100) NOT NULL, age INT DEFAULT NULL, is_externe TINYINT(1) NOT NULL, INDEX IDX_A4698DB241807E1D (teacher_id), INDEX IDX_A4698DB25FB14BA7 (level_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE teacher (id INT AUTO_INCREMENT NOT NULL, firstname VARCHAR(100) DEFAULT NULL, lastname VARCHAR(100) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -41,6 +42,7 @@ final class Version20220330163631 extends AbstractMigration
         $this->addSql('ALTER TABLE level DROP FOREIGN KEY FK_9AEACC1341807E1D');
         $this->addSql('ALTER TABLE students DROP FOREIGN KEY FK_A4698DB241807E1D');
         $this->addSql('ALTER TABLE user_students DROP FOREIGN KEY FK_44E469B2A76ED395');
+        $this->addSql('DROP TABLE events');
         $this->addSql('DROP TABLE level');
         $this->addSql('DROP TABLE students');
         $this->addSql('DROP TABLE teacher');
