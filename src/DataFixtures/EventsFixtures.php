@@ -9,6 +9,9 @@ use Doctrine\Persistence\ObjectManager;
 
 class EventsFixtures extends Fixture
 {
+    /**
+     * @throws \Exception
+     */
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -23,6 +26,13 @@ class EventsFixtures extends Fixture
             $event->setCapacity($faker->numberBetween(10, 150));
             $event->setDescription($faker->realTextBetween($minNbChars = 80, $maxNbChars = 500, $indexSize = 2));
             $event->setImage($faker->imageUrl(640, 480, 'animals', true));
+
+            $dateStart  = new \DateTimeImmutable('-1 year');
+            $dateFinish = new \DateTimeImmutable('-1 month');
+
+
+            $event->setStartsAt($dateStart);
+            $event->setFinishAt($dateFinish);
 
             $manager->persist($event);
 

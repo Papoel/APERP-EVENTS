@@ -31,6 +31,12 @@ class Events
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $startsAt;
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $finishAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +110,30 @@ class Events
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getStartsAt(): ?\DateTimeImmutable
+    {
+        return $this->startsAt;
+    }
+
+    public function setStartsAt(\DateTimeImmutable $startsAt): self
+    {
+        $this->startsAt = $startsAt;
+
+        return $this;
+    }
+
+    public function getFinishAt(): ?\DateTimeImmutable
+    {
+        return $this->finishAt;
+    }
+
+    public function setFinishAt(\DateTimeImmutable $finishAt): self
+    {
+        $this->finishAt = $finishAt;
 
         return $this;
     }
