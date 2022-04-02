@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EventsRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: EventsRepository::class)]
 class Events
@@ -33,6 +34,10 @@ class Events
 
     #[ORM\Column(type: 'datetime_immutable')]
     private $finishAt;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Gedmo\Slug(fields: ['name'])]
+    private $slug;
 
     public function getId(): ?int
     {
@@ -119,6 +124,18 @@ class Events
     public function setFinishAt(\DateTimeImmutable $finishAt): self
     {
         $this->finishAt = $finishAt;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
