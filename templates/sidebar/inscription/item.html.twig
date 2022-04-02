@@ -1,0 +1,15 @@
+<div class="p-4 mb-3 rounded">
+    {% if  event.capacity > 0 %}
+        <a href="#" type="button" class="btn btn-success position-relative btn-lg">
+            S'inscrire
+            <span class="position-absolute top-0 start-100 translate-middle px-2 py-1 bg-success border border-light rounded-circle">
+                <small class="fst-bold">{{ event.capacity }}</small>
+            </span>
+        </a>
+    {% else %}
+        <div class="alert alert-danger border border-danger border-2">
+            <h4 class="text-center text-uppercase m-0 p-0">Complet</h4>
+        </div>
+    {% endif %}
+
+</div>
