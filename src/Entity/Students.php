@@ -27,19 +27,19 @@ class Students
     #[ORM\Column(type: 'boolean')]
     private $isExterne;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'children')]
-    private $parents;
-
     #[ORM\ManyToOne(targetEntity: Teacher::class, inversedBy: 'students')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $teacher;
 
     #[ORM\ManyToOne(targetEntity: Level::class, inversedBy: 'students')]
     private $level;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'students')]
+    private $users;
+
     public function __construct()
     {
-        $this->parents = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,33 +95,6 @@ class Students
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getParents(): Collection
-    {
-        return $this->parents;
-    }
-
-    public function addParent(User $parent): self
-    {
-        if (!$this->parents->contains($parent)) {
-            $this->parents[] = $parent;
-            $parent->addChild($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParent(User $parent): self
-    {
-        if ($this->parents->removeElement($parent)) {
-            $parent->removeChild($this);
-        }
-
-        return $this;
-    }
-
     public function getTeacher(): ?Teacher
     {
         return $this->teacher;
@@ -142,6 +115,33 @@ class Students
     public function setLevel(?Level $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeStudent($this);
+        }
 
         return $this;
     }

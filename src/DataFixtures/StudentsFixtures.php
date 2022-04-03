@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
 
+use Faker;
 use App\Entity\Students;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Faker;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -29,9 +29,13 @@ class StudentsFixtures extends Fixture implements DependentFixtureInterface
                 $this->getReference(sprintf('level%d', $faker->numberBetween(1, 4)))
             );
 
+            $student->addUser(
+                $this->getReference(sprintf('user%d', $faker->numberBetween(1, 20)))
+            );
+
             $manager->persist($student);
 
-            $this->addReference(sprintf('student%d', $i), $student);
+//            $this->addReference(sprintf('student%d', $i), $student);
         }
 
         $manager->flush();
@@ -42,6 +46,7 @@ class StudentsFixtures extends Fixture implements DependentFixtureInterface
         return [
             LevelFixtures::class,
             TeacherFixtures::class,
+            UserFixtures::class,
         ];
     }
 }

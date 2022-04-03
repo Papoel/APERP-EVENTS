@@ -46,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
-    #[ORM\ManyToMany(targetEntity: Students::class, inversedBy: 'parents')]
+    #[ORM\ManyToMany(targetEntity: Students::class, mappedBy: 'users')]
     private $students;
 
     public function __construct()
@@ -204,19 +204,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->students;
     }
 
-    public function addChild(Students $child): self
+    public function addStudent(Students $student): self
     {
-        if (!$this->students->contains($child)) {
-            $this->students[] = $child;
+        if (!$this->students->contains($student)) {
+            $this->students[] = $student;
         }
 
         return $this;
     }
 
-    public function removeChild(Students $child): self
+    public function removeStudent(Students $student): self
     {
-        $this->students->removeElement($child);
+        $this->students->removeElement($student);
 
         return $this;
     }
+
+
+    public function __toString(): string
+    {
+        return $this->firstname. ' ' .$this->lastname;
+    }
+
 }
