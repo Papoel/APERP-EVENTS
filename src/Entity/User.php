@@ -49,6 +49,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Students::class, mappedBy: 'users')]
     private $students;
 
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    private $telephone;
+
     public function __construct()
     {
         $this->students = new ArrayCollection();
@@ -224,6 +227,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->firstname. ' ' .$this->lastname;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
     }
 
 }

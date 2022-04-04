@@ -30,6 +30,7 @@ class UserFixtures extends Fixture
         $hash = $this->passwordHasher->hashPassword($userAdmin, ('password123'));
         $userAdmin->setPassword($hash);
         $userAdmin->setIsAdmin(true);
+        $userAdmin->setTelephone($faker->mobileNumber());
 
         $manager->persist($userAdmin);
 
@@ -45,6 +46,7 @@ class UserFixtures extends Fixture
             $hash = $this->passwordHasher->hashPassword($user, ('password'));
             $user->setPassword($hash);
             $user->setIsAdmin(false);
+            $user->setTelephone($faker->mobileNumber());
 
             $manager->persist($user);
 
