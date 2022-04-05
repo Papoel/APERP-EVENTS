@@ -1,0 +1,154 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %} Inscription {{ event.name }}{% endblock %}
+
+{% block body %}
+    {% include ('layouts/partials/_menu.html.twig') %}
+    {% include ('layouts/partials/_header.html.twig') %}
+
+    <main class="container">
+
+        <div class="col">
+            <h3 class="pb-4 my-4 border-bottom fst-italic">{{ event.name }}</h3>
+        </div>
+
+        <fieldset class="my-3">
+            <div class="row">
+                <div class="col-9">
+                    <legend class="fw-bold text-uppercase h3 mb-4 fst-italic">Responsable Légal</legend>
+                </div>
+                <div class="col-3">
+                    <a href="#" class="h6 mx-auto">Modifier</a>
+                </div>
+            </div>
+
+            {# Prénom #}
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <label
+                            class="form-label h6"
+                            for="inscriptionFormFirstnameRL">
+                            Prénom
+                        </label>
+                        <input
+                            id="inscriptionFormFirstnameRL"
+                            class="form-control text-muted"
+                            type="text"
+                            value="{{ app.user.firstname }}"
+                            disabled
+                        />
+                    </div>
+                </div>
+
+                {# Nom #}
+                <div class="col">
+                    <div class="form-outline">
+                        <label
+                            class="form-label h6"
+                            for="inscriptionFormLastnameRL">
+                            Nom
+                        </label>
+                        <input
+                            id="inscriptionFormLastnameRL"
+                            class="form-control text-muted"
+                            type="text"
+                            value="{{ app.user.lastname }}"
+                            disabled
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {# Adresse #}
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <label
+                            class="form-label h6"
+                            for="inscriptionFormAddress">
+                            Adresse
+                        </label>
+                        <input
+                            id="inscriptionFormAddress"
+                            class="form-control text-muted"
+                            type="text"
+                            value="{{ app.user.address }}"
+                            disabled
+                        />
+                    </div>
+                </div>
+
+                {# Téléphone #}
+                <div class="col">
+                    <div class="form-outline">
+                        <label
+                            class="form-label h6"
+                            for="inscriptionFormPhone">
+                            Numéro de Téléphone
+                        </label>
+                        <input
+                            id="inscriptionFormPhone"
+                            class="form-control text-muted"
+                            type="text"
+                            value="{{ app.user.telephone }}"
+                            disabled
+                        />
+                    </div>
+                </div>
+
+                {# Email #}
+                <div class="col">
+                    <div class="form-outline mb-4">
+                        <label
+                            class="form-label"
+                            for="inscriptionFormEmail">
+                            Email
+                        </label>
+                        <input
+                            id="inscriptionFormEmail"
+                            class="form-control text-muted"
+                            type="email"
+                            value="{{ app.user.email }}"
+                            disabled
+                        />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="my-3">
+            <legend class="fw-bold text-uppercase h3 mb-4 fst-italic">Enfants</legend>
+
+            {# Todo : Ici je ne dois obtenir que les enfants de l'utilisateur connecté #}
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+            <div class="row">
+                <div class="col-6">
+{#                    {{ form_row(inscriptionForm.student) }}#}
+                </div>
+            </div>
+
+            {# Checkbox #}
+            <div class="form-check mb-4">
+                <input class="form-check-input me-2" type="checkbox" value="" id="inscriptionFormExterne" checked />
+                <label class="form-check-label h5" for="inscriptionFormExterne">
+                    Cochez cette case si l'enfant inscrit est extérieur à l'école Pasteur.
+                </label>
+            </div>
+
+        </fieldset>
+
+        <div class="d-flex justify-content-around">
+            <button type="submit" class="m-3 btn w-50 mb-5 btn-outline-success">
+                Valider l'inscription
+            </button>
+
+{#            <a href="#" class=" btn btn-primary w-50 mb-5 me-1">Confirmer l'inscription</a>#}
+{#            <a href="#" class="btn btn-outline-primary w-50 mb-5 ms-1">Ajouter une inscription</a>#}
+        </div>
+        {{ form_end(form) }}
+{#        {{ form_end(inscriptionForm) }}#}
+    </main>
+{% endblock %}

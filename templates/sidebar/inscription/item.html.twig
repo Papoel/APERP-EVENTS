@@ -2,9 +2,9 @@
     {% if  event.capacity > 0 %}
         <a href="{{ path('event_registration', { 'slug': event.slug }) }}"
            role="button"
-           class="btn btn-success position-relative btn-lg">
+           class="btn btn-primary position-relative btn-lg">
             S'inscrire
-            <span class="position-absolute top-0 start-100 translate-middle px-2 py-1 bg-success border border-light rounded-circle">
+            <span class="position-absolute top-0 start-100 translate-middle px-2 py-1 bg-primary border border-light rounded-circle">
                 <small class="fst-bold">{{ event.capacity }}</small>
             </span>
         </a>

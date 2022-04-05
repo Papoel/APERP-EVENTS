@@ -1,0 +1,117 @@
+{% extends 'layouts/base.html.twig' %}
+{% block title %}Inscription - {{ event.name }}{% endblock %}
+
+{% block body %}
+    {% include ('layouts/partials/_menu.html.twig') %}
+    {% include ('layouts/partials/_header.html.twig') %}
+
+{#
+    <main class="container">
+        <div class="row g-5">
+
+            <div class="col">
+                <h3 class="pb-4 mb-4 border-bottom fst-italic">{{ event.name }}</h3>
+            </div>
+
+        </div>
+
+        <form action="">
+            <fieldset class="my-3">
+                <legend class="fw-bold text-uppercase h3 mb-4 fst-italic">Responsable Légal</legend>
+
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-outline">
+                            <label class="form-label" for="inscriptionFormFirstnameRL">Prénom</label>
+                            <input type="text" id="inscriptionFormFirstnameRL" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-outline">
+                            <label class="form-label" for="inscriptionFormLastnameRL">Nom</label>
+                            <input type="text" id="inscriptionFormLastnameRL" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-outline">
+                            <label class="form-label" for="inscriptionFormAddress">Adresse</label>
+                            <input type="text" id="inscriptionFormAddress" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-outline">
+                            <label class="form-label" for="inscriptionFormPhone">Numéro de Téléphone</label>
+                            <input type="number" id="inscriptionFormPhone" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="col">
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="inscriptionFormEmail">Email</label>
+                            <input type="email" id="inscriptionFormEmail" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+           </fieldset>
+
+            <fieldset class="my-3">
+                <legend class="fw-bold text-uppercase h3 mb-4 fst-italic">Enfants</legend>
+
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-outline">
+                            <label class="form-label" for="inscriptionFormFirstname">Prénom</label>
+                            <input type="text" id="inscriptionFormFirstname" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-outline">
+                            <label class="form-label" for="inscriptionFormLastname">Nom</label>
+                            <input type="text" id="inscriptionFormLastname" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-outline">
+                            <label class="form-label" for="inscriptionFormAge">Age</label>
+                            <input type="number" id="inscriptionFormAge" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkbox -->
+                <div class="form-check mb-4">
+                    <input class="form-check-input me-2" type="checkbox" value="" id="inscriptionFormExterne" checked />
+                    <label class="form-check-label h5" for="inscriptionFormExterne">
+                        Cochez cette case si l'enfant inscrit est extérieur à l'école Pasteur.
+                    </label>
+                </div>
+
+            </fieldset>
+
+
+            <div class="d-flex justify-content-around">
+                <a href="#" class=" btn btn-primary w-50 mb-5 me-1">
+                    Confirmer l'inscription
+                </a>
+                <a href="#" class="btn btn-outline-primary w-50 mb-5 ms-1">Ajouter une inscription</a>
+            </div>
+
+
+        </form>
+    </main>
+#}
+
+    <section id="test">
+        {{ form(InscriptionEventsType) }}
+    </section>
+
+    {% include ('layouts/partials/_footer.html.twig') %}
+{% endblock %}

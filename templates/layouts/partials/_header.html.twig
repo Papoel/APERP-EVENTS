@@ -6,15 +6,17 @@
         </a>
 
         <ul class="nav nav-pills">
-            <li class="nav-item">
-                <a href="{{ path('app_login') }}" class="text-dark nav-link">
-                    Se connecter
-                </a>
-            </li>
             {% if app.user %}
+                <span class="badge bg-primary mt-2 p-2">{{ app.user.firstname }} {{ app.user.lastname }}</span>
                 <li class="nav-item">
                     <a href="{{ path('app_logout') }}" class="text-dark nav-link">
                         Se déconnecter
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a href="{{ path('app_login') }}" class="text-dark nav-link">
+                        Se connecter
                     </a>
                 </li>
             {% endif %}

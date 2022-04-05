@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -38,6 +40,14 @@ class Events
     #[ORM\Column(type: 'string', length: 255)]
     #[Gedmo\Slug(fields: ['name'])]
     private $slug;
+
+    #[ORM\ManyToMany(targetEntity: Inscription::class, mappedBy: 'event')]
+    private $inscriptions;
+
+    public function __construct()
+    {
+        $this->inscriptions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -136,6 +146,33 @@ class Events
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Inscription>
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->addEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): self
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            $inscription->removeEvent($this);
+        }
 
         return $this;
     }

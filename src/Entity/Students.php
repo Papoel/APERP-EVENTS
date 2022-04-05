@@ -37,9 +37,13 @@ class Students
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'students')]
     private $users;
 
+    #[ORM\ManyToMany(targetEntity: Inscription::class, mappedBy: 'student')]
+    private $inscriptions;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->inscriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,5 +148,37 @@ class Students
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Inscription>
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): self
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions[] = $inscription;
+            $inscription->addStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): self
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            $inscription->removeStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function getFullName()
+    {
+        return $this-> getFirstname(). ' ' .$this->getLastname();
     }
 }
